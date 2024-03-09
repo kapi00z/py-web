@@ -1,0 +1,3 @@
+web/app/database
+web/app/__pycache__
+generator.py
