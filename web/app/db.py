@@ -32,8 +32,11 @@ def save(data, dbFile):
     return True
 
 def update(dbName, data):
-    dbFile = os.path.join(dbPath, f"{dbName}.db")
-    if type(data) is not dict:
+    islist = False
+    if type(data) is list:
+        jsondata = data
+        islist = True
+    elif type(data) is not dict and type(data) is not list:
         try:
             jsondata = json.loads(data)
         except ValueError:
@@ -42,5 +45,8 @@ def update(dbName, data):
         jsondata = data
     
     db, dbFile = load(dbName)
-    db.append(jsondata)
+    if islist is False:
+        db.append(jsondata)
+    else:
+        db.extend(jsondata)
     save(db, dbFile)
